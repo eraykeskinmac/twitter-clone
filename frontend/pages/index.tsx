@@ -1,8 +1,11 @@
-import { BsBell, BsBookmark, BsEnvelope, BsTwitter } from "react-icons/bs";
-import React from "react";
-import { BiHash, BiHomeCircle, BiMoney, BiUser } from "react-icons/bi";
-import FeedCard from "@/components/FeedCard";
-import { SlOptions } from "react-icons/sl";
+import React, { useCallback } from 'react';
+
+import { CredentialResponse, GoogleLogin } from '@react-oauth/google';
+import { BiHash, BiHomeCircle, BiMoney, BiUser } from 'react-icons/bi';
+import { BsBell, BsBookmark, BsEnvelope, BsTwitter } from 'react-icons/bs';
+import { SlOptions } from 'react-icons/sl';
+
+import FeedCard from '@/components/FeedCard';
 
 interface TwitterSidebarButton {
   title: string;
@@ -11,40 +14,45 @@ interface TwitterSidebarButton {
 
 const SidebarMenuItems: TwitterSidebarButton[] = [
   {
-    title: "Home",
+    title: 'Home',
     icon: <BiHomeCircle />,
   },
   {
-    title: "Explore",
+    title: 'Explore',
     icon: <BiHash />,
   },
   {
-    title: "Notifications",
+    title: 'Notifications',
     icon: <BsBell />,
   },
   {
-    title: "Messages",
+    title: 'Messages',
     icon: <BsEnvelope />,
   },
   {
-    title: "Bookmarks",
+    title: 'Bookmarks',
     icon: <BsBookmark />,
   },
   {
-    title: "Twitter Blue",
+    title: 'Twitter Blue',
     icon: <BiMoney />,
   },
   {
-    title: "Profile",
+    title: 'Profile',
     icon: <BiUser />,
   },
   {
-    title: "More Options",
+    title: 'More Options',
     icon: <SlOptions />,
   },
 ];
 
 export default function Home() {
+  const handleLoginWithGoogle = useCallback(
+    (cred: CredentialResponse) => {},
+    [],
+  );
+
   return (
     <div>
       <div className="grid grid-cols-12 h-screen w-screen px-56">
@@ -80,7 +88,12 @@ export default function Home() {
           <FeedCard />
           <FeedCard />
         </div>
-        <div className="col-span-2"></div>
+        <div className="col-span-3 p-5">
+          <div className="border p-5 bg-slate-700 rounded-lg">
+            <h1 className="my-2 text-2xl">New to Twitter?</h1>
+            <GoogleLogin onSuccess={(cred) => console.log(cred)} />
+          </div>
+        </div>
       </div>
     </div>
   );
